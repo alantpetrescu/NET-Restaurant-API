@@ -59,6 +59,55 @@ namespace NET_Restaurant_API.Controllers
 		{
             return employees.FirstOrDefault(x => x.Id.Equals(id));
         }
-    } 
+
+		// 200
+        [HttpGet("StatusCodeOk")]
+        public IActionResult StatusCodeOk()
+        {
+			return Ok("It's Ok!");
+        }
+
+        // 204
+        [HttpGet("StatusCodeNoContent")]
+        public IActionResult StatusCodeNoContent()
+        {
+			return NoContent();
+        }
+
+        // 404
+        [HttpGet("StatusCodeNotFound")]
+        public IActionResult StatusCodeNotFound()
+        {
+			return NotFound();
+        }
+
+        // 403
+        [HttpGet("StatusCodeForbid")]
+        public IActionResult StatusCodeForbid()
+        {
+			return Forbid();
+        }
+
+        // 400
+        [HttpGet("StatusCodeBadRequest")]
+        public IActionResult StatusCodeBadRequest()
+        {
+            return BadRequest();
+        }
+
+        // CREATE
+        [HttpPost]
+		public IActionResult Add(Employee employee)
+		{
+			try
+			{
+				employees.Add(employee);
+                return Ok("The employee has been added with success!");
+            } catch
+			{
+				return NotFound();
+			}
+        }
+    }
 }
 
