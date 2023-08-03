@@ -5,9 +5,11 @@ namespace NET_Restaurant_API.Models
 {
 	public class Restaurant : BaseEntity
 	{
-        [Required]
-        public int Id { get; set; }
 		[StringLength(100)]
 		public string Title { get; set; }
+
+		public Manager Manager { get; set; }
+		public ICollection<Employee> Employees { get; set; }
+		public IList<RestaurantRecipe> RestaurantRecipes { get; set; }
 	}
 }

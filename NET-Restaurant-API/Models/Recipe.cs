@@ -6,10 +6,11 @@ namespace NET_Restaurant_API.Models
 {
     public class Recipe : BaseEntity
 	{
-        [Required]
-        public int Id { get; set; }
         [StringLength(100)]
 		public string Name { get; set; }
+        
+        public IList<RestaurantRecipe> RestaurantRecipes { get; set; }
+        public IList<RecipeIngredient> RecipeIngredients { get; set; }
 	}
 }
 
