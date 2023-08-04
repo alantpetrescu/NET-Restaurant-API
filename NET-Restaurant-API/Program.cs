@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NET_Restaurant_API.Data;
+using NET_Restaurant_API.Models;
+using NET_Restaurant_API.Repositories.DatabaseRepository;
+using NET_Restaurant_API.Services.DemoService;
+using NET_Restaurant_API.Services.EmployeeService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +14,15 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(buil
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//repositories
+//Employee repository
+builder.Services.AddTransient<IDatabaseRepository<Employee>, EmployeeRepository>();
+
+//Ingredient repository
+builder.Services.AddTransient<IDatabaseRepository<Ingredient>, IngredientRepository>();
+
+builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 
 var app = builder.Build();
 

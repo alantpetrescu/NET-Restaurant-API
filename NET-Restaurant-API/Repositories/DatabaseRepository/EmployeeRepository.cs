@@ -35,5 +35,10 @@ namespace NET_Restaurant_API.Repositories.DatabaseRepository
                 => new { employee, restaurant }).Select(obj => obj.employee);
             return result.ToListAsync();
         }
+
+        public Employee GetByEmail(string email)
+        {
+            return _table.FirstOrDefault(x => x.Email.ToLower().Equals(email.ToLower()));
+        }
     }
 }
