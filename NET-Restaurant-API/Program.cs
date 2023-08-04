@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NET_Restaurant_API.Data;
+using NET_Restaurant_API.Helper.Extensions;
 using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
 using NET_Restaurant_API.Services.DemoService;
@@ -15,12 +16,8 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(buil
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//repositories
-//Employee repository
-builder.Services.AddTransient<IDatabaseRepository<Employee>, EmployeeRepository>();
-
-//Ingredient repository
-builder.Services.AddTransient<IDatabaseRepository<Ingredient>, IngredientRepository>();
+builder.Services.AddRepositories();
+builder.Services.AddServices();
 
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 
