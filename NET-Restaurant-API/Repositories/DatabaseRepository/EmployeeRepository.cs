@@ -5,7 +5,7 @@ using NET_Restaurant_API.Repositories.GenericRepository;
 
 namespace NET_Restaurant_API.Repositories.DatabaseRepository
 {
-    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
+    public class EmployeeRepository : GenericRepository<Employee>, IDatabaseRepository<Employee>
     {
         public EmployeeRepository(AppDBContext context) : base(context)
         {

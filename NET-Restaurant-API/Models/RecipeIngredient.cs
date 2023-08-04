@@ -2,6 +2,7 @@
 {
     public class RecipeIngredient
     {
+        public int Quantity { get; set; }
         public Guid RecipeId { get; set; }
         public Recipe Recipe { get; set; }
 
