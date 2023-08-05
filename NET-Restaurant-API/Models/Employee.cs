@@ -14,6 +14,6 @@ namespace NET_Restaurant_API.Models
 		public string? Email { get; set; }
 		public Guid RestaurantId { get; set; }
 		public Restaurant Restaurant { get; set; }
-	}
+    }
 }
 

@@ -164,6 +164,9 @@ namespace NET_Restaurant_API.Migrations
                     b.Property<Guid>("IngredientId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("RecipeId", "IngredientId");
 
                     b.HasIndex("IngredientId");

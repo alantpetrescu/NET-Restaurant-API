@@ -19,8 +19,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 
-builder.Services.AddTransient<IEmployeeService, EmployeeService>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
