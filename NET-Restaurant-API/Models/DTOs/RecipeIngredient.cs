@@ -1,4 +1,4 @@
-﻿namespace NET_Restaurant_API.Models
+﻿namespace NET_Restaurant_API.Models.DTOs
 {
     public class RecipeIngredient
     {

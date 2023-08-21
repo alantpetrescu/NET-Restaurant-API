@@ -12,7 +12,7 @@ using NET_Restaurant_API.Data;
 namespace NET_Restaurant_API.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20230805093327_InitDatabase")]
+    [Migration("20230818081948_InitDatabase")]
     partial class InitDatabase
     {
         /// <inheritdoc />
@@ -26,6 +26,24 @@ namespace NET_Restaurant_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("NET_Restaurant_API.Models.DTOs.RecipeIngredient", b =>
+                {
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IngredientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("RecipeId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("RecipeIngredient");
+                });
+
             modelBuilder.Entity("NET_Restaurant_API.Models.Employee", b =>
                 {
                     b.Property<Guid>("Id")
@@ -35,7 +53,7 @@ namespace NET_Restaurant_API.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataCreated")
+                    b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
@@ -72,7 +90,7 @@ namespace NET_Restaurant_API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataCreated")
+                    b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
@@ -99,7 +117,7 @@ namespace NET_Restaurant_API.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataCreated")
+                    b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
@@ -141,7 +159,7 @@ namespace NET_Restaurant_API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataCreated")
+                    b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
@@ -159,31 +177,13 @@ namespace NET_Restaurant_API.Migrations
                     b.ToTable("Recipes");
                 });
 
-            modelBuilder.Entity("NET_Restaurant_API.Models.RecipeIngredient", b =>
-                {
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IngredientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("RecipeId", "IngredientId");
-
-                    b.HasIndex("IngredientId");
-
-                    b.ToTable("RecipeIngredient");
-                });
-
             modelBuilder.Entity("NET_Restaurant_API.Models.Restaurant", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataCreated")
+                    b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
@@ -216,29 +216,7 @@ namespace NET_Restaurant_API.Migrations
                     b.ToTable("RestaurantRecipe");
                 });
 
-            modelBuilder.Entity("NET_Restaurant_API.Models.Employee", b =>
-                {
-                    b.HasOne("NET_Restaurant_API.Models.Restaurant", "Restaurant")
-                        .WithMany("Employees")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Restaurant");
-                });
-
-            modelBuilder.Entity("NET_Restaurant_API.Models.Manager", b =>
-                {
-                    b.HasOne("NET_Restaurant_API.Models.Restaurant", "Restaurant")
-                        .WithOne("Manager")
-                        .HasForeignKey("NET_Restaurant_API.Models.Manager", "RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Restaurant");
-                });
-
-            modelBuilder.Entity("NET_Restaurant_API.Models.RecipeIngredient", b =>
+            modelBuilder.Entity("NET_Restaurant_API.Models.DTOs.RecipeIngredient", b =>
                 {
                     b.HasOne("NET_Restaurant_API.Models.Ingredient", "Ingredient")
                         .WithMany("RecipeIngredients")
@@ -255,6 +233,28 @@ namespace NET_Restaurant_API.Migrations
                     b.Navigation("Ingredient");
 
                     b.Navigation("Recipe");
+                });
+
+            modelBuilder.Entity("NET_Restaurant_API.Models.Employee", b =>
+                {
+                    b.HasOne("NET_Restaurant_API.Models.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("NET_Restaurant_API.Models.Manager", b =>
+                {
+                    b.HasOne("NET_Restaurant_API.Models.Restaurant", "Restaurant")
+                        .WithOne("Manager")
+                        .HasForeignKey("NET_Restaurant_API.Models.Manager", "RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("NET_Restaurant_API.Models.RestaurantRecipe", b =>
@@ -290,10 +290,7 @@ namespace NET_Restaurant_API.Migrations
 
             modelBuilder.Entity("NET_Restaurant_API.Models.Restaurant", b =>
                 {
-                    b.Navigation("Employees");
-
-                    b.Navigation("Manager")
-                        .IsRequired();
+                    b.Navigation("Manager");
 
                     b.Navigation("RestaurantRecipes");
                 });

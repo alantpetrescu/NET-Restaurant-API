@@ -12,8 +12,12 @@ namespace NET_Restaurant_API.Models
         public int Age { get; set; }
         public string Email { get; set; }
         public int Revenue { get; set; }
-
         public Guid RestaurantId { get; set; }
-        public Restaurant Restaurant { get; set; }
+        public Restaurant Restaurant { get; set; } = null!;
+
+        public override string ToString()
+        {
+            return "Manager " + FirstName + LastName + " with id " + Id;
+        }
     }
 }

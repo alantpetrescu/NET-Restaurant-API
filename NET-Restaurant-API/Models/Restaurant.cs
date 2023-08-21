@@ -8,8 +8,12 @@ namespace NET_Restaurant_API.Models
 		[StringLength(100)]
 		public string Title { get; set; }
 
-		public Manager Manager { get; set; }
-		public ICollection<Employee> Employees { get; set; }
-		public IList<RestaurantRecipe> RestaurantRecipes { get; set; }
-	}
+		public Manager? Manager { get; set; }
+		public IList<RestaurantRecipe>? RestaurantRecipes { get; set; }
+
+        public override string ToString()
+        {
+			return "Restaurant " + Title + " with id " + Id + " has the manager: \n" + Manager;
+        }
+    }
 }

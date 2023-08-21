@@ -12,8 +12,6 @@ namespace NET_Restaurant_API.Models
 		[Range(0, 100)]
 		public int Age { get; set; }
 		public string? Email { get; set; }
-		public Guid RestaurantId { get; set; }
 		public Restaurant Restaurant { get; set; }
     }
 }
-

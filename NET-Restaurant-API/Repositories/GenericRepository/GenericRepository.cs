@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NET_Restaurant_API.Data;
 using NET_Restaurant_API.Models.Base;
+using System.Linq.Expressions;
 
 namespace NET_Restaurant_API.Repositories.GenericRepository
 {
@@ -18,7 +19,19 @@ namespace NET_Restaurant_API.Repositories.GenericRepository
         //Get
         public async Task<List<TEntity>> GetAll()
         {
-            return await _table.AsNoTracking().ToListAsync();
+            return await _table.ToListAsync();
+        }
+
+        public async Task<List<TEntity>> GetAllIncludingAsync(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            IQueryable<TEntity> query = _table;
+
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await query.AsNoTracking().ToListAsync();
         }
 
         public IQueryable<TEntity> GetAllAsQueryable()
@@ -26,9 +39,15 @@ namespace NET_Restaurant_API.Repositories.GenericRepository
             return _table.AsNoTracking().AsQueryable();
         }
 
+        public TEntity Get(Guid Id)
+        {
+            return _table.First(x => x.Id == Id);
+        }
+
         //Create
         public void Create(TEntity entity)
         {
+            Console.WriteLine("ceva aici");
             _table.Add(entity);
         }
 
@@ -60,7 +79,7 @@ namespace NET_Restaurant_API.Repositories.GenericRepository
         }
 
         //Delete
-        public void Delete(TEntity entity) 
+        public void Delete(TEntity entity)
         {
             _table.Remove(entity);
         }
@@ -86,7 +105,6 @@ namespace NET_Restaurant_API.Repositories.GenericRepository
         //Save
         public bool Save()
         {
-
             return _context.SaveChanges() > 0;
         }
 

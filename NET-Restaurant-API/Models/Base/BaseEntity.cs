@@ -9,7 +9,7 @@ namespace NET_Restaurant_API.Models.Base
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime DataCreated { get; set; }
+        public DateTime DateCreated { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? DateModified { get; set; }
     }

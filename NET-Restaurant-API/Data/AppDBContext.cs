@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NET_Restaurant_API.Models;
+using NET_Restaurant_API.Models.DTOs;
 
 namespace NET_Restaurant_API.Data
 {
@@ -18,16 +19,11 @@ namespace NET_Restaurant_API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // One-to-many Employee-Restaurant
-            modelBuilder.Entity<Employee>()
-                .HasOne(e => e.Restaurant)
-                .WithMany(r => r.Employees)
-                .HasForeignKey(e => e.RestaurantId);
-
-            modelBuilder.Entity<Manager>()
-                .HasOne(m => m.Restaurant)
-                .WithOne(r => r.Manager)
-                .HasForeignKey<Manager>(m => m.RestaurantId);
+            modelBuilder.Entity<Restaurant>()
+                .HasOne(r => r.Manager)
+                .WithOne(m => m.Restaurant)
+                .HasForeignKey<Manager>(r => r.RestaurantId)
+                .IsRequired();
 
             modelBuilder.Entity<RestaurantRecipe>()
                 .HasKey(rr => new { rr.RestaurantId, rr.RecipeId });

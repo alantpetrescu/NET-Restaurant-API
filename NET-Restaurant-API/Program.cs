@@ -3,7 +3,6 @@ using NET_Restaurant_API.Data;
 using NET_Restaurant_API.Helper.Extensions;
 using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
-using NET_Restaurant_API.Services.DemoService;
 using NET_Restaurant_API.Services.EmployeeService;
 
 var builder = WebApplication.CreateBuilder(args);
