@@ -13,5 +13,6 @@ namespace NET_Restaurant_API.Models.DTOs
         public string Email { get; set; }
         [Range(0, 100)]
         public int Age { get; set; }
+        public Guid RestaurantId { get; set; }
     }
 }

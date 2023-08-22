@@ -6,20 +6,32 @@ namespace NET_Restaurant_API.Services.EmployeeService
 {
     public class EmployeeService
     {
-        public EmployeeRepository _databaseRepository;
-        public EmployeeService(EmployeeRepository databaseRepository) 
+        public EmployeeRepository _employeeRepository;
+        public RestaurantRepository _restaurantRepository;
+        public EmployeeService(EmployeeRepository databaseRepository, RestaurantRepository restaurantRepository) 
         {
-            _databaseRepository = databaseRepository;
+            _employeeRepository = databaseRepository;
+            _restaurantRepository = restaurantRepository;
+        }
+
+        public Employee GetEmployeeById(Guid employeeId)
+        {
+            return _employeeRepository.Get(employeeId);
+        }
+
+        public Employee GetEmployeeByEmail(String email)
+        {
+            return _employeeRepository.GetByEmail(email);
         }
 
         public async Task<List<Employee>> GetAll()
         {
-            return await _databaseRepository.GetAll();
+            return await _employeeRepository.GetAll();
         }
 
         public EmployeeDTO GetDataMappedByEmail(string email)
         {
-            Employee employee = _databaseRepository.GetByEmail(email);
+            Employee employee = _employeeRepository.GetByEmail(email);
             EmployeeDTO result = new EmployeeDTO()
             {
                 Id = employee.Id,
@@ -33,9 +45,33 @@ namespace NET_Restaurant_API.Services.EmployeeService
             return result;
         }
 
-        public void Create(EmployeeDTO employeeDTO, RestaurantDTO restaurantDTO)
+        public Employee Create(EmployeeDTO employeeDTO)
         {
-           // _databaseRepository.Create(employee);
+            var employee = new Employee()
+            {
+                Id = employeeDTO.Id,
+                DateCreated = employeeDTO.DateCreated,
+                DateModified = employeeDTO.DateModified,
+                FirstName = employeeDTO.FirstName,
+                LastName = employeeDTO.LastName,
+                Age = employeeDTO.Age,
+                Email = employeeDTO.Email,
+                RestaurantId = employeeDTO.RestaurantId
+            };
+
+            System.Diagnostics.Debug.WriteLine(employee);
+
+            _employeeRepository.Create(employee);
+            _employeeRepository.Save();
+
+            return employee;
+        }
+
+        public async Task Delete(Guid employeeId)
+        {
+            var employeeToDelete = await _employeeRepository.FindByIdAsync(employeeId);
+            _employeeRepository.Delete(employeeToDelete);
+            await _employeeRepository.SaveAsync();
         }
     }
 }

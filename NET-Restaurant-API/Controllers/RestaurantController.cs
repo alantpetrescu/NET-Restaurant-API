@@ -23,6 +23,12 @@ namespace NET_Restaurant_API.Controllers
             return Json(_restaurantService.GetAll());
         }
 
+        [HttpGet("getRestaurant/{restaurantId}")]
+        public IActionResult GetRestaurant([FromRoute] Guid restaurantId)
+        {
+            return Ok(_restaurantService.GetRestaurant(restaurantId));
+        }
+
 
         [HttpPost("create")]
         public IActionResult Create(RestaurantDTO restaurantDTO)

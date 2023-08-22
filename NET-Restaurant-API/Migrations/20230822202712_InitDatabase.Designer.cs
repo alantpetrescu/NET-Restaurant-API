@@ -12,7 +12,7 @@ using NET_Restaurant_API.Data;
 namespace NET_Restaurant_API.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20230818081948_InitDatabase")]
+    [Migration("20230822202712_InitDatabase")]
     partial class InitDatabase
     {
         /// <inheritdoc />

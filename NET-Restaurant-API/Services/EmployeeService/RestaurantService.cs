@@ -24,6 +24,11 @@ namespace NET_Restaurant_API.Services.EmployeeService
             return listRestaurant;
         }
 
+        public Restaurant GetRestaurant(Guid restaurantId)
+        {
+            return _restaurantRepository.Get(restaurantId);
+        }
+
         public Restaurant Create(RestaurantDTO restaurantDTO)
         {
             Restaurant restaurant = new Restaurant
@@ -43,8 +48,8 @@ namespace NET_Restaurant_API.Services.EmployeeService
 
         public async Task Delete(Guid restaurantId) 
         {
-            var courseToDelete = await _restaurantRepository.FindByIdAsync(restaurantId);
-            _restaurantRepository.Delete(courseToDelete);
+            var restaurantToDelete = await _restaurantRepository.FindByIdAsync(restaurantId);
+            _restaurantRepository.Delete(restaurantToDelete);
             await _restaurantRepository.SaveAsync();
         }
     }
