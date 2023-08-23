@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using NET_Restaurant_API;
 using NET_Restaurant_API.Data;
 using NET_Restaurant_API.Helper.Extensions;
+using NET_Restaurant_API.Helper.Middleware;
 using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
-using NET_Restaurant_API.Services.EmployeeService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +19,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddRepositories();
 builder.Services.AddServices();
+builder.Services.AddUtils();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.UseMiddleware<JwtMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

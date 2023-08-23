@@ -3,14 +3,14 @@ using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Models.DTOs;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
 
-namespace NET_Restaurant_API.Services.EmployeeService
+namespace NET_Restaurant_API.Services
 {
     public class EmployeeService
     {
         public EmployeeRepository _employeeRepository;
         public RestaurantRepository _restaurantRepository;
         public IMapper _mapper;
-        public EmployeeService(EmployeeRepository databaseRepository, RestaurantRepository restaurantRepository, IMapper mapper) 
+        public EmployeeService(EmployeeRepository databaseRepository, RestaurantRepository restaurantRepository, IMapper mapper)
         {
             _employeeRepository = databaseRepository;
             _restaurantRepository = restaurantRepository;
@@ -25,12 +25,12 @@ namespace NET_Restaurant_API.Services.EmployeeService
             return employeeResponseDTO;
         }
 
-        public EmployeeResponseDTO GetEmployeeByEmail(String email)
+        public EmployeeResponseDTO GetEmployeeByEmail(string email)
         {
             Employee employee = _employeeRepository.GetByEmail(email);
             EmployeeResponseDTO employeeResponseDTO = _mapper.Map<EmployeeResponseDTO>(employee);
 
-            return employeeResponseDTO; 
+            return employeeResponseDTO;
         }
 
         public async Task<List<EmployeeResponseDTO>> GetAll()
@@ -53,7 +53,7 @@ namespace NET_Restaurant_API.Services.EmployeeService
         {
             Employee employee = _mapper.Map<Employee>(employeeCreateDTO);
 
-   //         System.Diagnostics.Debug.WriteLine(employee);
+            //         System.Diagnostics.Debug.WriteLine(employee);
 
             _employeeRepository.Create(employee);
             _employeeRepository.Save();

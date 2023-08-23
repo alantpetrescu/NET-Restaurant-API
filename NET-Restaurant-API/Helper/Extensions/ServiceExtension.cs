@@ -1,10 +1,11 @@
+using NET_Restaurant_API.Helpers.Jwt;
 using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
-using NET_Restaurant_API.Services.EmployeeService;
+using NET_Restaurant_API.Services;
 
 namespace NET_Restaurant_API.Helper.Extensions
 {
-	public static class ServiceExtension
+    public static class ServiceExtension
 	{
 		public static IServiceCollection AddRepositories(this IServiceCollection services)
 		{
@@ -12,6 +13,7 @@ namespace NET_Restaurant_API.Helper.Extensions
             services.AddTransient<IDatabaseRepository<Ingredient>, IngredientRepository>();
 			services.AddTransient<ManagerRepository>();
 			services.AddTransient<RestaurantRepository>();
+			services.AddTransient<UserRepository>();
 
             return services;
 		}
@@ -21,8 +23,16 @@ namespace NET_Restaurant_API.Helper.Extensions
             services.AddTransient<ManagerService>();
 			services.AddTransient<EmployeeService>();
 			services.AddTransient<RestaurantService>();
+			services.AddTransient<UserService>();
 
 			return services;
 		}
-	}
+
+        public static IServiceCollection AddUtils(this IServiceCollection services)
+        {
+			services.AddTransient<IJwtUtils, JwtUtils>();
+
+            return services;
+        }
+    }
 }

@@ -3,7 +3,7 @@ using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Models.DTOs;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
 
-namespace NET_Restaurant_API.Services.EmployeeService
+namespace NET_Restaurant_API.Services
 {
     public class ManagerService
     {
@@ -39,7 +39,7 @@ namespace NET_Restaurant_API.Services.EmployeeService
 
             var restaurant = _restaurantRepository.FindById(managerCreateDTO.RestaurantId);
             restaurant.Manager = manager;
-//            System.Diagnostics.Debug.WriteLine(restaurant);
+            //            System.Diagnostics.Debug.WriteLine(restaurant);
 
             _managerRepository.Create(manager);
             _managerRepository.Save();

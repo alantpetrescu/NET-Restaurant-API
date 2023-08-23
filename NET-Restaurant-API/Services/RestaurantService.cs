@@ -3,7 +3,7 @@ using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Models.DTOs;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
 
-namespace NET_Restaurant_API.Services.EmployeeService
+namespace NET_Restaurant_API.Services
 {
     public class RestaurantService
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NET_Restaurant_API.Models.DTOs;
-using NET_Restaurant_API.Services.EmployeeService;
+using NET_Restaurant_API.Services;
 
 namespace NET_Restaurant_API.Controllers
 {
