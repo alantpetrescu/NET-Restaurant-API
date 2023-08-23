@@ -12,7 +12,7 @@ using NET_Restaurant_API.Data;
 namespace NET_Restaurant_API.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20230822202712_InitDatabase")]
+    [Migration("20230823123011_InitDatabase")]
     partial class InitDatabase
     {
         /// <inheritdoc />
@@ -26,24 +26,6 @@ namespace NET_Restaurant_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("NET_Restaurant_API.Models.DTOs.RecipeIngredient", b =>
-                {
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IngredientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("RecipeId", "IngredientId");
-
-                    b.HasIndex("IngredientId");
-
-                    b.ToTable("RecipeIngredient");
-                });
-
             modelBuilder.Entity("NET_Restaurant_API.Models.Employee", b =>
                 {
                     b.Property<Guid>("Id")
@@ -55,7 +37,8 @@ namespace NET_Restaurant_API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<DateTime?>("DateModified")
                         .ValueGeneratedOnAddOrUpdate()
@@ -96,7 +79,8 @@ namespace NET_Restaurant_API.Migrations
 
                     b.Property<DateTime?>("DateModified")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -119,7 +103,8 @@ namespace NET_Restaurant_API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<DateTime?>("DateModified")
                         .ValueGeneratedOnAddOrUpdate()
@@ -161,7 +146,8 @@ namespace NET_Restaurant_API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<DateTime?>("DateModified")
                         .ValueGeneratedOnAddOrUpdate()
@@ -177,6 +163,24 @@ namespace NET_Restaurant_API.Migrations
                     b.ToTable("Recipes");
                 });
 
+            modelBuilder.Entity("NET_Restaurant_API.Models.RecipeIngredient", b =>
+                {
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IngredientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("RecipeId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("RecipeIngredient");
+                });
+
             modelBuilder.Entity("NET_Restaurant_API.Models.Restaurant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -185,7 +189,8 @@ namespace NET_Restaurant_API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<DateTime?>("DateModified")
                         .ValueGeneratedOnAddOrUpdate()
@@ -216,25 +221,6 @@ namespace NET_Restaurant_API.Migrations
                     b.ToTable("RestaurantRecipe");
                 });
 
-            modelBuilder.Entity("NET_Restaurant_API.Models.DTOs.RecipeIngredient", b =>
-                {
-                    b.HasOne("NET_Restaurant_API.Models.Ingredient", "Ingredient")
-                        .WithMany("RecipeIngredients")
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NET_Restaurant_API.Models.Recipe", "Recipe")
-                        .WithMany("RecipeIngredients")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ingredient");
-
-                    b.Navigation("Recipe");
-                });
-
             modelBuilder.Entity("NET_Restaurant_API.Models.Employee", b =>
                 {
                     b.HasOne("NET_Restaurant_API.Models.Restaurant", "Restaurant")
@@ -255,6 +241,25 @@ namespace NET_Restaurant_API.Migrations
                         .IsRequired();
 
                     b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("NET_Restaurant_API.Models.RecipeIngredient", b =>
+                {
+                    b.HasOne("NET_Restaurant_API.Models.Ingredient", "Ingredient")
+                        .WithMany("RecipeIngredients")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NET_Restaurant_API.Models.Recipe", "Recipe")
+                        .WithMany("RecipeIngredients")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ingredient");
+
+                    b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("NET_Restaurant_API.Models.RestaurantRecipe", b =>

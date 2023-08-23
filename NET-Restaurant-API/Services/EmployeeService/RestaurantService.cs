@@ -1,5 +1,6 @@
-﻿using NET_Restaurant_API.Models.DTOs;
+﻿using AutoMapper;
 using NET_Restaurant_API.Models;
+using NET_Restaurant_API.Models.DTOs;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
 
 namespace NET_Restaurant_API.Services.EmployeeService
@@ -7,43 +8,38 @@ namespace NET_Restaurant_API.Services.EmployeeService
     public class RestaurantService
     {
         public RestaurantRepository _restaurantRepository;
-        public RestaurantService(RestaurantRepository restaurantRepository)
+        public IMapper _mapper;
+        public RestaurantService(RestaurantRepository restaurantRepository, IMapper mapper)
         {
             _restaurantRepository = restaurantRepository;
+            _mapper = mapper;
         }
 
-        public List<Restaurant> GetAll()
+        public List<RestaurantResponseDTO> GetAll()
         {
-            List<Restaurant> listRestaurant = _restaurantRepository.GetAll().Result;
+            List<Restaurant> restaurants = _restaurantRepository.GetAll().Result;
+            List<RestaurantResponseDTO> restaurantsResponseDTO = _mapper.Map<List<RestaurantResponseDTO>>(restaurants);
 
-            foreach(var restaurant in listRestaurant)
-            {
-                System.Diagnostics.Debug.WriteLine(restaurant);
-            }
-
-            return listRestaurant;
+            return restaurantsResponseDTO;
         }
 
-        public Restaurant GetRestaurant(Guid restaurantId)
+        public RestaurantResponseDTO GetRestaurant(Guid restaurantId)
         {
-            return _restaurantRepository.Get(restaurantId);
+            Restaurant restaurant = _restaurantRepository.Get(restaurantId);
+            RestaurantResponseDTO restaurantResponseDTO = _mapper.Map<RestaurantResponseDTO>(restaurant);
+
+            return restaurantResponseDTO;
         }
 
-        public Restaurant Create(RestaurantDTO restaurantDTO)
+        public RestaurantResponseDTO Create(RestaurantCreateDTO restaurantCreateDTO)
         {
-            Restaurant restaurant = new Restaurant
-            {
-                Id = restaurantDTO.Id,
-                DateCreated = restaurantDTO.DateCreated,
-                DateModified = restaurantDTO.DateModified,
-                Title = restaurantDTO.Title,
-                RestaurantRecipes = null
-            };
+            Restaurant restaurant = _mapper.Map<Restaurant>(restaurantCreateDTO);
             // _databaseRepository.Create(employee);
             _restaurantRepository.Create(restaurant);
             _restaurantRepository.Save();
 
-            return restaurant;
+            RestaurantResponseDTO restaurantResponseDTO = _mapper.Map<RestaurantResponseDTO>(restaurant);
+            return restaurantResponseDTO;
         }
 
         public async Task Delete(Guid restaurantId) 

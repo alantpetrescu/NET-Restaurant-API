@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NET_Restaurant_API.Models.DTOs;
-using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Services.EmployeeService;
+using NET_Restaurant_API.Models.DTOs;
 
 namespace NET_Restaurant_API.Controllers
 {
@@ -35,10 +34,10 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult Create(EmployeeDTO employeeDTO)
+        public IActionResult Create(EmployeeCreateDTO employeeCreateDTO)
         {
-            Employee employee = _employeeService.Create(employeeDTO);
-            return Ok(employee);
+            EmployeeResponseDTO employeeResponseDTO = _employeeService.Create(employeeCreateDTO);
+            return Ok(employeeResponseDTO);
         }
 
         [HttpPost("delete/{employeeId}")]

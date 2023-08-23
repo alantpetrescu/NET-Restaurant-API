@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NET_Restaurant_API.Models.DTOs
 {
-    public class EmployeeDTO : BaseEntity
+    public class EmployeeResponseDTO : BaseEntity
     {
         [StringLength(100)]
         public string FirstName { get; set; }

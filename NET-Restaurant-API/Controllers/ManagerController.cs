@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Models.DTOs;
 using NET_Restaurant_API.Services.EmployeeService;
 
@@ -31,10 +29,10 @@ namespace NET_Restaurant_API.Controllers
 
 
         [HttpPost("create")]
-        public IActionResult Create(ManagerDTO managerDTO)
+        public IActionResult Create(ManagerCreateDTO managerCreateDTO)
         {
-            Manager manager = _managerService.Create(managerDTO);
-            return Ok(manager);
+            ManagerResponseDTO managerResponseDTO = _managerService.Create(managerCreateDTO);
+            return Ok(managerResponseDTO);
         }
 
         [HttpPost("delete/{managerId}")]

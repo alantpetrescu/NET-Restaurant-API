@@ -15,5 +15,5 @@ namespace NET_Restaurant_API.Models
         {
 			return "Restaurant " + Title + " with id " + Id + " has the manager: \n" + Manager;
         }
-    }
+    }	
 }

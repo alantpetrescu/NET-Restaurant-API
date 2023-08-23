@@ -1,4 +1,5 @@
-﻿using NET_Restaurant_API.Models;
+﻿using AutoMapper;
+using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Models.DTOs;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
 
@@ -8,47 +9,45 @@ namespace NET_Restaurant_API.Services.EmployeeService
     {
         public ManagerRepository _managerRepository;
         public RestaurantRepository _restaurantRepository;
-        public ManagerService(ManagerRepository managerRepository, RestaurantRepository restaurantRepository)
+        public IMapper _mapper;
+        public ManagerService(ManagerRepository managerRepository, RestaurantRepository restaurantRepository, IMapper mapper)
         {
             _managerRepository = managerRepository;
             _restaurantRepository = restaurantRepository;
+            _mapper = mapper;
         }
 
-        public Manager GetManager(Guid managerId)
+        public ManagerResponseDTO GetManager(Guid managerId)
         {
-            return _managerRepository.Get(managerId);
+            Manager manager = _managerRepository.Get(managerId);
+            ManagerResponseDTO managerResponseDTO = _mapper.Map<ManagerResponseDTO>(manager);
+
+            return managerResponseDTO;
         }
 
-        public async Task<List<Manager>> GetAll()
+        public async Task<List<ManagerResponseDTO>> GetAll()
         {
-            return await _managerRepository.GetAll();
+            List<Manager> managers = await _managerRepository.GetAll();
+            List<ManagerResponseDTO> managersResponseDTO = _mapper.Map<List<ManagerResponseDTO>>(managers);
+
+            return managersResponseDTO;
         }
 
-        public Manager Create(ManagerDTO managerDTO)
+        public ManagerResponseDTO Create(ManagerCreateDTO managerCreateDTO)
         {
-            var manager = new Manager()
-            {
-                Id = managerDTO.Id,
-                DateCreated = managerDTO.DateCreated,
-                DateModified = managerDTO.DateModified,
-                FirstName = managerDTO.FirstName,
-                LastName = managerDTO.LastName,
-                Age = managerDTO.Age,
-                Email = managerDTO.Email,
-                Revenue = managerDTO.Revenue,
-                RestaurantId = managerDTO.RestaurantId
-            };
+            Manager manager = _mapper.Map<Manager>(managerCreateDTO);
 
-            var restaurant = _restaurantRepository.FindById(managerDTO.RestaurantId);
+            var restaurant = _restaurantRepository.FindById(managerCreateDTO.RestaurantId);
             restaurant.Manager = manager;
-            System.Diagnostics.Debug.WriteLine(restaurant);
+//            System.Diagnostics.Debug.WriteLine(restaurant);
 
             _managerRepository.Create(manager);
             _managerRepository.Save();
-            _restaurantRepository.Save();
-            System.Diagnostics.Debug.WriteLine(restaurant);
+            //            _restaurantRepository.Save();
+            //System.Diagnostics.Debug.WriteLine(restaurant);
 
-            return manager;
+            ManagerResponseDTO managerResponseDTO = _mapper.Map<ManagerResponseDTO>(manager);
+            return managerResponseDTO;
         }
 
         public async Task Delete(Guid managerId)

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using NET_Restaurant_API;
 using NET_Restaurant_API.Data;
 using NET_Restaurant_API.Helper.Extensions;
 using NET_Restaurant_API.Models;
@@ -17,6 +19,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddRepositories();
 builder.Services.AddServices();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
@@ -34,4 +37,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-

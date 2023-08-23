@@ -1,4 +1,5 @@
-﻿using NET_Restaurant_API.Models;
+﻿using AutoMapper;
+using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Models.DTOs;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
 
@@ -8,63 +9,57 @@ namespace NET_Restaurant_API.Services.EmployeeService
     {
         public EmployeeRepository _employeeRepository;
         public RestaurantRepository _restaurantRepository;
-        public EmployeeService(EmployeeRepository databaseRepository, RestaurantRepository restaurantRepository) 
+        public IMapper _mapper;
+        public EmployeeService(EmployeeRepository databaseRepository, RestaurantRepository restaurantRepository, IMapper mapper) 
         {
             _employeeRepository = databaseRepository;
             _restaurantRepository = restaurantRepository;
+            _mapper = mapper;
         }
 
-        public Employee GetEmployeeById(Guid employeeId)
+        public EmployeeResponseDTO GetEmployeeById(Guid employeeId)
         {
-            return _employeeRepository.Get(employeeId);
+            Employee employee = _employeeRepository.Get(employeeId);
+            EmployeeResponseDTO employeeResponseDTO = _mapper.Map<EmployeeResponseDTO>(employee);
+
+            return employeeResponseDTO;
         }
 
-        public Employee GetEmployeeByEmail(String email)
-        {
-            return _employeeRepository.GetByEmail(email);
-        }
-
-        public async Task<List<Employee>> GetAll()
-        {
-            return await _employeeRepository.GetAll();
-        }
-
-        public EmployeeDTO GetDataMappedByEmail(string email)
+        public EmployeeResponseDTO GetEmployeeByEmail(String email)
         {
             Employee employee = _employeeRepository.GetByEmail(email);
-            EmployeeDTO result = new EmployeeDTO()
-            {
-                Id = employee.Id,
-                DateCreated = employee.DateCreated,
-                DateModified = employee.DateModified,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                Email = email
-            };
+            EmployeeResponseDTO employeeResponseDTO = _mapper.Map<EmployeeResponseDTO>(employee);
 
-            return result;
+            return employeeResponseDTO; 
         }
 
-        public Employee Create(EmployeeDTO employeeDTO)
+        public async Task<List<EmployeeResponseDTO>> GetAll()
         {
-            var employee = new Employee()
-            {
-                Id = employeeDTO.Id,
-                DateCreated = employeeDTO.DateCreated,
-                DateModified = employeeDTO.DateModified,
-                FirstName = employeeDTO.FirstName,
-                LastName = employeeDTO.LastName,
-                Age = employeeDTO.Age,
-                Email = employeeDTO.Email,
-                RestaurantId = employeeDTO.RestaurantId
-            };
+            List<Employee> employees = await _employeeRepository.GetAll();
+            List<EmployeeResponseDTO> employeesResponseDTO = _mapper.Map<List<EmployeeResponseDTO>>(employees);
 
-            System.Diagnostics.Debug.WriteLine(employee);
+            return employeesResponseDTO;
+        }
+
+        public EmployeeResponseDTO GetDataMappedByEmail(string email)
+        {
+            Employee employee = _employeeRepository.GetByEmail(email);
+            EmployeeResponseDTO employeeResponseDTO = _mapper.Map<EmployeeResponseDTO>(employee);
+
+            return employeeResponseDTO;
+        }
+
+        public EmployeeResponseDTO Create(EmployeeCreateDTO employeeCreateDTO)
+        {
+            Employee employee = _mapper.Map<Employee>(employeeCreateDTO);
+
+   //         System.Diagnostics.Debug.WriteLine(employee);
 
             _employeeRepository.Create(employee);
             _employeeRepository.Save();
 
-            return employee;
+            EmployeeResponseDTO employeeResponseDTO = _mapper.Map<EmployeeResponseDTO>(employee);
+            return employeeResponseDTO;
         }
 
         public async Task Delete(Guid employeeId)
