@@ -13,6 +13,7 @@ namespace NET_Restaurant_API.Helper.Extensions
             services.AddTransient<IDatabaseRepository<Ingredient>, IngredientRepository>();
 			services.AddTransient<ManagerRepository>();
 			services.AddTransient<RestaurantRepository>();
+			services.AddTransient<RecipeRepository>();
 			services.AddTransient<UserRepository>();
 
             return services;
@@ -23,7 +24,8 @@ namespace NET_Restaurant_API.Helper.Extensions
             services.AddTransient<ManagerService>();
 			services.AddTransient<EmployeeService>();
 			services.AddTransient<RestaurantService>();
-			services.AddTransient<UserService>();
+            services.AddTransient<RecipeService>();
+            services.AddTransient<UserService>();
 
 			return services;
 		}

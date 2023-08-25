@@ -10,6 +10,7 @@ namespace NET_Restaurant_API.Data
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<User> Users { get; set; } 
 
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) 
         {
@@ -35,6 +36,10 @@ namespace NET_Restaurant_API.Data
                 .HasDefaultValueSql("getdate()");
 
             modelBuilder.Entity<Recipe>()
+                .Property(e => e.DateCreated)
+                .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<User>()
                 .Property(e => e.DateCreated)
                 .HasDefaultValueSql("getdate()");
 

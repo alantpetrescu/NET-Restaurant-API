@@ -23,28 +23,28 @@ namespace NET_Restaurant_API.Services
 
         public UserAuthResponseDTO Authentificate(UserAuthRequestDTO model)
         {
-            var teacher = _userRepository.FindByEmail(model.Email);
-            if (teacher == null || !BCryptNet.Verify(model.Password, teacher.PasswordHash))
+            var user = _userRepository.FindByEmail(model.Email);
+            if (user == null || !BCryptNet.Verify(model.Password, user.PasswordHash))
             {
                 return null; // or throw exception
             }
 
             // jwt generation
-            var jwtToken = _jwtUtilis.GenerateJwtToken(teacher);
-            return new UserAuthResponseDTO(teacher, jwtToken);
+            var jwtToken = _jwtUtilis.GenerateJwtToken(user);
+            return new UserAuthResponseDTO(user, jwtToken);
         }
 
-        public async Task Create(UserAuthRequestDTO teacher)
+        public async Task Create(UserAuthRequestDTO user)
         {
-            var newDBUser = _mapper.Map<User>(teacher);
-            newDBUser.PasswordHash = BCryptNet.HashPassword(teacher.Password);
+            var newDBUser = _mapper.Map<User>(user);
+            newDBUser.PasswordHash = BCryptNet.HashPassword(user.Password);
             newDBUser.Role = Role.User;
 
             await _userRepository.CreateAsync(newDBUser);
             await _userRepository.SaveAsync();
         }
-
-        public async Task<List<User>> GetAllTeachers()
+        
+        public async Task<List<User>> GetAllUsers()
         {
             return await _userRepository.GetAll();
         }
@@ -52,6 +52,13 @@ namespace NET_Restaurant_API.Services
         public User GetById(Guid id)
         {
             return _userRepository.FindById(id);
+        }
+
+        public async Task Delete(Guid restaurantId)
+        {
+            var restaurantToDelete = await _userRepository.FindByIdAsync(restaurantId);
+            _userRepository.Delete(restaurantToDelete);
+            await _userRepository.SaveAsync();
         }
     }
 }

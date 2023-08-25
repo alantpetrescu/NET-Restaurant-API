@@ -9,12 +9,12 @@
 
         public string Token { get; set; }
 
-        public UserAuthResponseDTO(User teacher, string token)
+        public UserAuthResponseDTO(User user, string token) 
         {
-            Id = teacher.Id;
-            FirstName = teacher.FirstName;
-            LastName = teacher.LastName;
-            Email = teacher.Email;
+            Id = user.Id;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Email = user.Email;
             Token = token;
         }
     }

@@ -12,8 +12,8 @@ using NET_Restaurant_API.Data;
 namespace NET_Restaurant_API.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20230823123011_InitDatabase")]
-    partial class InitDatabase
+    [Migration("20230824174710_AddUserDateCreatedDefaultValue")]
+    partial class AddUserDateCreatedDefaultValue
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -219,6 +219,48 @@ namespace NET_Restaurant_API.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("RestaurantRecipe");
+                });
+
+            modelBuilder.Entity("NET_Restaurant_API.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<DateTime?>("DateModified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("NET_Restaurant_API.Models.Employee", b =>

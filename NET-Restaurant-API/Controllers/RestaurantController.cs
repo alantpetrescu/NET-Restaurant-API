@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NET_Restaurant_API.Helpers.Attributes;
 using NET_Restaurant_API.Models.DTOs;
+using NET_Restaurant_API.Models.Enums;
 using NET_Restaurant_API.Services;
 
 namespace NET_Restaurant_API.Controllers
@@ -7,7 +9,7 @@ namespace NET_Restaurant_API.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class RestaurantController : Controller
+    public class RestaurantController : ControllerBase
     {
         private readonly RestaurantService _restaurantService;
 
@@ -17,12 +19,14 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpGet("getRestaurants")]
+        [Authorization(Role.Admin, Role.User)]
         public IActionResult GetRestaurants()
         {
-            return Json(_restaurantService.GetAll());
+            return Ok(_restaurantService.GetAll());
         }
 
         [HttpGet("getRestaurant/{restaurantId}")]
+        [Authorization(Role.Admin, Role.User)]
         public IActionResult GetRestaurant([FromRoute] Guid restaurantId)
         {
             return Ok(_restaurantService.GetRestaurant(restaurantId));
@@ -30,6 +34,7 @@ namespace NET_Restaurant_API.Controllers
 
 
         [HttpPost("create")]
+        [Authorization(Role.Admin, Role.User)]
         public IActionResult Create(RestaurantCreateDTO restaurantCreateDTO)
         {
             RestaurantResponseDTO restaurantResponseDTO = _restaurantService.Create(restaurantCreateDTO);
@@ -37,6 +42,7 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpPost("delete/{restaurantId}")]
+        [Authorization(Role.Admin, Role.User)]
         public async Task<IActionResult> Delete([FromRoute] Guid restaurantId)
         {
             await _restaurantService.Delete(restaurantId);

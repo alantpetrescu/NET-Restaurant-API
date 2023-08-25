@@ -2,6 +2,7 @@
 using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Models.DTOs;
 using NET_Restaurant_API.Models.DTOs.RecipeDTO;
+using NET_Restaurant_API.Models.DTOs.UserDTO;
 
 namespace NET_Restaurant_API.Helper
 {
@@ -17,6 +18,8 @@ namespace NET_Restaurant_API.Helper
             CreateMap<Recipe, RecipeResponseDTO>();
             CreateMap<Restaurant, RestaurantCreateDTO>();
             CreateMap<Restaurant, RestaurantResponseDTO>();
+            CreateMap<User, UserAuthRequestDTO>();
+            CreateMap<User, UserAuthResponseDTO>();
 
             //CreateMap<List<Employee>, List<EmployeeCreateDTO>>();
             //CreateMap<List<Employee>, List<EmployeeResponseDTO>>();
@@ -35,6 +38,8 @@ namespace NET_Restaurant_API.Helper
             CreateMap<RecipeResponseDTO, Recipe>();
             CreateMap<RestaurantCreateDTO, Restaurant>();
             CreateMap<RestaurantResponseDTO, Restaurant>();
+            CreateMap<UserAuthRequestDTO, User>();
+            CreateMap<UserAuthResponseDTO, User>();
 
             //CreateMap<List<EmployeeCreateDTO>, List<Employee>>();
             //CreateMap<List<EmployeeResponseDTO>, List<Employee>>();

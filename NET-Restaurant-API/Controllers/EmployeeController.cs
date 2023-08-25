@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NET_Restaurant_API.Helpers.Attributes;
 using NET_Restaurant_API.Models.DTOs;
+using NET_Restaurant_API.Models.Enums;
 using NET_Restaurant_API.Services;
 
 namespace NET_Restaurant_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : Controller
+    public class EmployeeController : ControllerBase
     {
         private readonly EmployeeService _employeeService;
 
@@ -16,24 +18,28 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpGet("getEmployee/id/{employeeId}")]
+        [Authorization(Role.Admin, Role.User)]
         public IActionResult GetEmployeeByEmail([FromRoute] Guid employeeId)
         {
-            return Json(_employeeService.GetEmployeeById(employeeId));
+            return Ok(_employeeService.GetEmployeeById(employeeId));
         }
 
         [HttpGet("getEmployee/email/{employeeEmail}")]
+        [Authorization(Role.Admin, Role.User)]
         public IActionResult GetEmployeeById([FromRoute] String employeeEmail)
         {
-            return Json(_employeeService.GetEmployeeByEmail(employeeEmail));
+            return Ok(_employeeService.GetEmployeeByEmail(employeeEmail));
         }
 
         [HttpGet("getEmployees")]
+        [Authorization(Role.Admin, Role.User)]
         public IActionResult GetEmployees()
         {
-            return Json(_employeeService.GetAll().Result);
+            return Ok(_employeeService.GetAll().Result);
         }
 
         [HttpPost("create")]
+        [Authorization(Role.Admin, Role.User)]
         public IActionResult Create(EmployeeCreateDTO employeeCreateDTO)
         {
             EmployeeResponseDTO employeeResponseDTO = _employeeService.Create(employeeCreateDTO);
@@ -41,6 +47,7 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpPost("delete/{employeeId}")]
+        [Authorization(Role.Admin, Role.User)]
         public async Task<IActionResult> Delete([FromRoute] Guid employeeId)
         {
             await _employeeService.Delete(employeeId);
