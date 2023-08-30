@@ -42,6 +42,20 @@ namespace NET_Restaurant_API.Services
             return restaurantResponseDTO;
         }
 
+        public RestaurantResponseDTO Update(Guid restaurantId, RestaurantCreateDTO restaurantCreateDTO)
+        {
+            Restaurant restaurant = _mapper.Map<Restaurant>(restaurantCreateDTO);
+            // _databaseRepository.Create(employee);
+            restaurant.Id = restaurantId;
+            //restaurant.DateModified = DateTime.Now;
+
+            _restaurantRepository.Update(restaurant);
+            _restaurantRepository.Save();
+
+            RestaurantResponseDTO restaurantResponseDTO = _mapper.Map<RestaurantResponseDTO>(restaurant);
+            return restaurantResponseDTO;
+        }
+
         public async Task Delete(Guid restaurantId) 
         {
             var restaurantToDelete = await _restaurantRepository.FindByIdAsync(restaurantId);

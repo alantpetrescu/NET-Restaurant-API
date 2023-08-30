@@ -41,6 +41,14 @@ namespace NET_Restaurant_API.Controllers
             return Ok(recipeResponseDTO);
         }
 
+        [HttpPost("update/{recipeId}")]
+        [Authorization(Role.Admin, Role.User)]
+        public IActionResult Update([FromRoute] Guid recipeId, RecipeCreateDTO recipeCreateDTO)
+        {
+            RecipeResponseDTO recipeResponseDTO = _recipeService.Update(recipeId, recipeCreateDTO);
+            return Ok(recipeResponseDTO);
+        }
+
         [HttpPost("delete/{recipeId}")]
         [Authorization(Role.Admin, Role.User)]
         public async Task<IActionResult> Delete([FromRoute] Guid recipeId)

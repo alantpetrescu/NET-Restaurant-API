@@ -26,7 +26,7 @@ namespace NET_Restaurant_API.Controllers
 
         [HttpGet("getUser/{userId}")]
         [Authorization(Role.Admin, Role.User)]
-        public IActionResult GetRestaurant([FromRoute] Guid userId)
+        public IActionResult GetUser([FromRoute] Guid userId)
         {
             return Ok(_userService.GetById(userId));
         }
@@ -34,9 +34,17 @@ namespace NET_Restaurant_API.Controllers
 
         [HttpPost("create")]
         [Authorization(Role.Admin, Role.User)]
-        public IActionResult Create(UserAuthRequestDTO userAuthRequestDTO)
+        public async Task<IActionResult> CreateAsync(UserAuthRequestDTO userAuthRequestDTO)
         {
-            _userService.Create(userAuthRequestDTO);
+            await _userService.Create(userAuthRequestDTO);
+            return Ok();
+        }
+
+        [HttpPost("update/{userId}")]
+        [Authorization(Role.Admin, Role.User)]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid userId, UserAuthRequestDTO userAuthRequestDTO)
+        {
+            await _userService.Update(userId, userAuthRequestDTO);
             return Ok();
         }
 

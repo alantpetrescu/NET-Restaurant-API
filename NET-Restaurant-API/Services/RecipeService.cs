@@ -43,6 +43,20 @@ namespace NET_Restaurant_API.Services
             return recipeResponseDTO;
         }
 
+        public RecipeResponseDTO Update(Guid recipeId, RecipeCreateDTO recipeCreateDTO)
+        {
+            Recipe recipe = _mapper.Map<Recipe>(recipeCreateDTO);
+            // _databaseRepository.Create(employee);
+            recipe.Id = recipeId;
+            //recipe.DateCreated = DateTime.Now;
+
+            _recipeRepository.Update(recipe);
+            _recipeRepository.Save();
+
+            RecipeResponseDTO recipeResponseDTO = _mapper.Map<RecipeResponseDTO>(recipe);
+            return recipeResponseDTO;
+        }
+
         public async Task Delete(Guid recipeId)
         {
             var recipeToDelete = await _recipeRepository.FindByIdAsync(recipeId);

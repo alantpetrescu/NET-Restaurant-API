@@ -2,6 +2,7 @@
 using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Models.DTOs;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
+using System.Diagnostics;
 
 namespace NET_Restaurant_API.Services
 {
@@ -56,6 +57,22 @@ namespace NET_Restaurant_API.Services
             //         System.Diagnostics.Debug.WriteLine(employee);
 
             _employeeRepository.Create(employee);
+            _employeeRepository.Save();
+
+            EmployeeResponseDTO employeeResponseDTO = _mapper.Map<EmployeeResponseDTO>(employee);
+            return employeeResponseDTO;
+        }
+
+        public EmployeeResponseDTO Update(Guid employeeId, EmployeeCreateDTO employeeCreateDTO)
+        {
+            Employee employee = _mapper.Map<Employee>(employeeCreateDTO);
+            employee.Id = employeeId;
+            //employee.DateModified = DateTime.UtcNow;
+            Debug.WriteLine("Employe DateModified: " + employee.DateModified);
+
+            //         System.Diagnostics.Debug.WriteLine(employee);
+
+            _employeeRepository.Update(employee);
             _employeeRepository.Save();
 
             EmployeeResponseDTO employeeResponseDTO = _mapper.Map<EmployeeResponseDTO>(employee);

@@ -43,7 +43,19 @@ namespace NET_Restaurant_API.Services
             await _userRepository.CreateAsync(newDBUser);
             await _userRepository.SaveAsync();
         }
-        
+
+        public async Task Update(Guid userId, UserAuthRequestDTO user)
+        {
+            var dbUser = _mapper.Map<User>(user);
+            dbUser.Id = userId;
+            dbUser.PasswordHash = BCryptNet.HashPassword(user.Password);
+            dbUser.Role = Role.User;
+            //dbUser.DateModified = DateTime.UtcNow;
+
+            _userRepository.Update(dbUser);
+            await _userRepository.SaveAsync();
+        }
+
         public async Task<List<User>> GetAllUsers()
         {
             return await _userRepository.GetAll();
