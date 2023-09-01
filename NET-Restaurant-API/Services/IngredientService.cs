@@ -50,8 +50,8 @@ namespace NET_Ingredient_API.Services
             Ingredient ingredient = _mapper.Map<Ingredient>(ingredientCreateDTO);
             ingredient.Id = ingredientId;
 
-            _ingredientRepository.Save();
             _ingredientRepository.Update(ingredient);
+            _ingredientRepository.Save();
             //            _ingredientRepository.Save();
             //System.Diagnostics.Debug.WriteLine(ingredient);
 

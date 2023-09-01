@@ -8,6 +8,8 @@ using NET_Restaurant_API.Services;
 
 namespace NET_Restaurant_API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class IngredientController : ControllerBase
     {
         private readonly IngredientService _ingredientService;
@@ -54,19 +56,5 @@ namespace NET_Restaurant_API.Controllers
             await _ingredientService.Delete(ingredientId);
             return Ok(_ingredientService.GetAll().Result);
         }
-
-        //[HttpGet("byEmail/{email}")]
-        //public IActionResult GetByEmail(string email)
-        //{
-        //    var result = _ingredientService.GetDataMappedByEmail(email);
-        //    return Ok(result);
-        //}
-
-        //[HttpPost("create")]
-        //public IActionResult CreateIngredient(IngredientDTO ingredient)
-        //{
-        //    _ingredientService.Create(ingredient);
-        //    return Ok();
-        //}
     }
 }
