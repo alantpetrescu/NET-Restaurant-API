@@ -12,6 +12,11 @@ namespace NET_Restaurant_API.Repositories.DatabaseRepository
 
         }
 
+        public Ingredient Get(Guid Id)
+        {
+            return _table.First(x => x.Id == Id);
+        }
+
         public List<Ingredient> GetAllWithInclude()
         {
             return _table.Include(x => x.RecipeIngredients).ToList();

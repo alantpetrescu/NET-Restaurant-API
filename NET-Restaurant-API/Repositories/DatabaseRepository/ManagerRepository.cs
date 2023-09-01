@@ -9,5 +9,10 @@ namespace NET_Restaurant_API.Repositories.DatabaseRepository
         public ManagerRepository(AppDBContext context) : base(context)
         {
         }
+        public Manager Get(Guid Id)
+        {
+            return _table.First(x => x.Id == Id);
+        }
+
     }
 }

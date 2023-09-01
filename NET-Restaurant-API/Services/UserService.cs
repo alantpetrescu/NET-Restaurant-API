@@ -34,11 +34,21 @@ namespace NET_Restaurant_API.Services
             return new UserAuthResponseDTO(user, jwtToken);
         }
 
-        public async Task Create(UserAuthRequestDTO user)
+        public async Task CreateUser(UserAuthRequestDTO user)
         {
             var newDBUser = _mapper.Map<User>(user);
             newDBUser.PasswordHash = BCryptNet.HashPassword(user.Password);
             newDBUser.Role = Role.User;
+
+            await _userRepository.CreateAsync(newDBUser);
+            await _userRepository.SaveAsync();
+        }
+
+        public async Task CreateAdmin(UserAuthRequestDTO user)
+        {
+            var newDBUser = _mapper.Map<User>(user);
+            newDBUser.PasswordHash = BCryptNet.HashPassword(user.Password);
+            newDBUser.Role = Role.Admin;
 
             await _userRepository.CreateAsync(newDBUser);
             await _userRepository.SaveAsync();

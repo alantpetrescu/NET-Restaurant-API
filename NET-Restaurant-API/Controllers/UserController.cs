@@ -31,17 +31,8 @@ namespace NET_Restaurant_API.Controllers
             return Ok(_userService.GetById(userId));
         }
 
-
-        [HttpPost("create")]
-        [Authorization(Role.Admin, Role.User)]
-        public async Task<IActionResult> CreateAsync(UserAuthRequestDTO userAuthRequestDTO)
-        {
-            await _userService.Create(userAuthRequestDTO);
-            return Ok();
-        }
-
         [HttpPost("update/{userId}")]
-        [Authorization(Role.Admin, Role.User)]
+        [Authorization(Role.Admin)]
         public async Task<IActionResult> UpdateAsync([FromRoute] Guid userId, UserAuthRequestDTO userAuthRequestDTO)
         {
             await _userService.Update(userId, userAuthRequestDTO);
@@ -49,7 +40,7 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpPost("delete/{userId}")]
-        [Authorization(Role.Admin, Role.User)]
+        [Authorization(Role.Admin)]
         public async Task<IActionResult> Delete([FromRoute] Guid userId)
         {
             await _userService.Delete(userId);

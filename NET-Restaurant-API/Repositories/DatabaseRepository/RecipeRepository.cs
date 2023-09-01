@@ -9,5 +9,10 @@ namespace NET_Restaurant_API.Repositories.DatabaseRepository
         public RecipeRepository(AppDBContext context) : base(context)
         {
         }
+
+        public Recipe Get(Guid Id)
+        {
+            return _table.First(x => x.Id == Id);
+        }
     }
 }

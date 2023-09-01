@@ -18,7 +18,14 @@ namespace NET_Restaurant_API.Controllers
         [HttpPost("createUser")]
         public async Task<IActionResult> CreateUser(UserAuthRequestDTO user)
         {
-            await _userService.Create(user);
+            await _userService.CreateUser(user);
+            return Ok();
+        }
+
+        [HttpPost("createAdmin")]
+        public async Task<IActionResult> CreateAdmin(UserAuthRequestDTO user)
+        {
+            await _userService.CreateAdmin(user);
             return Ok();
         }
 

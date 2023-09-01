@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace NET_Restaurant_API.Repositories.GenericRepository
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         protected readonly AppDBContext _context;
         protected readonly DbSet<TEntity> _table;
@@ -37,11 +37,6 @@ namespace NET_Restaurant_API.Repositories.GenericRepository
         public IQueryable<TEntity> GetAllAsQueryable()
         {
             return _table.AsNoTracking().AsQueryable();
-        }
-
-        public TEntity Get(Guid Id)
-        {
-            return _table.First(x => x.Id == Id);
         }
 
         //Create

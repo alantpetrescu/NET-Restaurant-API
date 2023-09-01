@@ -12,6 +12,11 @@ namespace NET_Restaurant_API.Repositories.DatabaseRepository
 
         }
 
+        public Restaurant Get(Guid Id)
+        {
+            return _table.First(x => x.Id == Id);
+        }
+
         public async Task<List<Restaurant>> GetAll()
         {
             return await _table.ToListAsync();

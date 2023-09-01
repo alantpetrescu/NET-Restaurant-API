@@ -34,7 +34,7 @@ namespace NET_Restaurant_API.Controllers
 
 
         [HttpPost("create")]
-        [Authorization(Role.Admin, Role.User)]
+        [Authorization(Role.Admin)]
         public IActionResult Create(RecipeCreateDTO recipeCreateDTO)
         {
             RecipeResponseDTO recipeResponseDTO = _recipeService.Create(recipeCreateDTO);
@@ -42,7 +42,7 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpPost("update/{recipeId}")]
-        [Authorization(Role.Admin, Role.User)]
+        [Authorization(Role.Admin)]
         public IActionResult Update([FromRoute] Guid recipeId, RecipeCreateDTO recipeCreateDTO)
         {
             RecipeResponseDTO recipeResponseDTO = _recipeService.Update(recipeId, recipeCreateDTO);
@@ -50,7 +50,7 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpPost("delete/{recipeId}")]
-        [Authorization(Role.Admin, Role.User)]
+        [Authorization(Role.Admin)]
         public async Task<IActionResult> Delete([FromRoute] Guid recipeId)
         {
             await _recipeService.Delete(recipeId);

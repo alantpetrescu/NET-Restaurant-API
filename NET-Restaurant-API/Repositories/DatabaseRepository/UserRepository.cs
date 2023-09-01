@@ -11,6 +11,11 @@ namespace NET_Restaurant_API.Repositories.DatabaseRepository
 
         }
 
+        public User Get(Guid Id)
+        {
+            return _table.First(x => x.Id == Id);
+        }
+
         public User FindByEmail(string email)
         {
             return _table.FirstOrDefault(x => x.Email == email);

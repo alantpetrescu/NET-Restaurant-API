@@ -39,7 +39,7 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpPost("create")]
-        [Authorization(Role.Admin, Role.User)]
+        [Authorization(Role.Admin)]
         public IActionResult Create(EmployeeCreateDTO employeeCreateDTO)
         {
             EmployeeResponseDTO employeeResponseDTO = _employeeService.Create(employeeCreateDTO);
@@ -47,7 +47,7 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpPost("update/{employeeId}")]
-        [Authorization(Role.Admin, Role.User)]
+        [Authorization(Role.Admin)]
         public IActionResult Update([FromRoute] Guid employeeId, EmployeeCreateDTO employeeCreateDTO)
         {
             EmployeeResponseDTO employeeResponseDTO = _employeeService.Update(employeeId, employeeCreateDTO);
@@ -55,7 +55,7 @@ namespace NET_Restaurant_API.Controllers
         }
 
         [HttpPost("delete/{employeeId}")]
-        [Authorization(Role.Admin, Role.User)]
+        [Authorization(Role.Admin)]
         public async Task<IActionResult> Delete([FromRoute] Guid employeeId)
         {
             await _employeeService.Delete(employeeId);

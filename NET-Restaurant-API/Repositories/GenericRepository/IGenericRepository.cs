@@ -2,7 +2,7 @@
 
 namespace NET_Restaurant_API.Repositories.GenericRepository
 {
-    public interface IGenericRepository<TEntity> where TEntity : BaseEntity
+    public interface IGenericRepository<TEntity> where TEntity : class
     {
         //Get all data
         Task<List<TEntity>> GetAll();

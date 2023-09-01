@@ -11,6 +11,11 @@ namespace NET_Restaurant_API.Repositories.DatabaseRepository
 
         }
 
+        public Employee Get(Guid Id)
+        {
+            return _table.First(x => x.Id == Id);
+        }
+
         public Employee GetByEmail(string email)
         {
             return _table.FirstOrDefault(x => x.Email.ToLower().Equals(email.ToLower()));
