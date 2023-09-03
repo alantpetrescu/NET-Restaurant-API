@@ -19,7 +19,7 @@ namespace NET_Restaurant_API.Controllers
             _ingredientService = ingredientService;
         }
 
-        [HttpGet("getIngredient/id/{ingredientId}")]
+        [HttpGet("getIngredient/{ingredientId}")]
         [Authorization(Role.Admin, Role.User)]
         public IActionResult GetIngredientByEmail([FromRoute] Guid ingredientId)
         {
@@ -31,6 +31,13 @@ namespace NET_Restaurant_API.Controllers
         public IActionResult GetIngredients()
         {
             return Ok(_ingredientService.GetAll().Result);
+        }
+
+        [HttpGet("getRecipesContainingIngredient/{ingredientName}")]
+        [Authorization(Role.Admin, Role.User)]
+        public IActionResult GetRecipesContainingIngredient([FromRoute] String ingredientName)
+        {
+            return Ok(_ingredientService.GetRecipesContainingIngredient(ingredientName));
         }
 
         [HttpPost("create")]

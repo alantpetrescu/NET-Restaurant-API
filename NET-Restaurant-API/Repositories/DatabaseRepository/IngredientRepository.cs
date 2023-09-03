@@ -12,6 +12,13 @@ namespace NET_Restaurant_API.Repositories.DatabaseRepository
 
         }
 
+        public List<Recipe> GetRecipesContainingIngredient(String ingredientName)
+        {
+            return  _context.Recipes
+                .Where(r => r.RecipeIngredients.Any(ri => ri.Ingredient.Name == ingredientName))
+                .ToList();
+        }
+
         public Ingredient Get(Guid Id)
         {
             return _table.First(x => x.Id == Id);

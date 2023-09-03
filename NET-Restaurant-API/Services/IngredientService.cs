@@ -2,6 +2,8 @@
 using NET_Restaurant_API.Models.DTOs.IngredientDTO;
 using NET_Restaurant_API.Models;
 using NET_Restaurant_API.Repositories.DatabaseRepository;
+using Microsoft.EntityFrameworkCore;
+using NET_Restaurant_API.Models.DTOs.RecipeDTO;
 
 namespace NET_Ingredient_API.Services
 {
@@ -29,6 +31,13 @@ namespace NET_Ingredient_API.Services
             List<IngredientResponseDTO> ingredientsResponseDTO = _mapper.Map<List<IngredientResponseDTO>>(ingredients);
 
             return ingredientsResponseDTO;
+        }
+
+        public List<RecipeResponseDTO> GetRecipesContainingIngredient(String ingredientName)
+        {
+            var recipeResponseDTO =  _mapper.Map<List<RecipeResponseDTO>>(_ingredientRepository.GetRecipesContainingIngredient(ingredientName));
+
+            return recipeResponseDTO;
         }
 
         public IngredientResponseDTO Create(IngredientCreateDTO ingredientCreateDTO)
